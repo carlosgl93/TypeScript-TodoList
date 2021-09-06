@@ -1,5 +1,7 @@
 import React, { ChangeEventHandler, useState } from 'react';
 import { nanoid } from 'nanoid';
+import Task from '../components/Task';
+import Tasks from '../components/Tasks';
 
 type Props = {};
 
@@ -45,6 +47,11 @@ export const ListScreen: React.FC<Props> = () => {
   const handleClearClick = () => {
     setTasks((tasks) => tasks.filter((task) => !task.isComplete));
   };
+
+  // function to delete a task
+  const handleTaskDeleteClick = (handleTask: Task) => () => {
+    setTasks((tasks) => tasks.filter((task) => task.id !== handleTask.id));
+  };
   console.log(tasks);
 
   return (
@@ -60,6 +67,7 @@ export const ListScreen: React.FC<Props> = () => {
               onChange={handleCompleteChange(task)}
             />
             {task.label}
+            <button onClick={handleTaskDeleteClick(task)}>Delete</button>
           </li>
         ))}
       </ul>
