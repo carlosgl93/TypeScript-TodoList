@@ -1,18 +1,10 @@
-import React, { ChangeEventHandler, useState } from 'react';
+import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
-import Task from '../components/Task';
-import Tasks from '../components/Tasks';
+import { Task, TasksProps } from '../types';
 
-type Props = {};
+type Props = TasksProps & {};
 
-type Task = {
-  id: string;
-  label: string;
-  isComplete: boolean;
-};
-export const ListScreen: React.FC<Props> = () => {
-  // tasks container
-  const [tasks, setTasks] = useState<Task[]>([]);
+export const ListScreen: React.FC<Props> = ({ tasks, setTasks }) => {
   // set new task hook
   const [newTaskLabel, setNewTaskLabel] = useState('');
   // input handler
