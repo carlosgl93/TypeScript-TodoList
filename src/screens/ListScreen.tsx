@@ -4,7 +4,11 @@ import { Task, TasksProps } from '../types';
 
 type Props = TasksProps & {};
 
-export const ListScreen: React.FC<Props> = ({ tasks, setTasks }) => {
+export const ListScreen: React.FC<Props> = ({
+  tasks,
+  setTasks,
+  updateTaskCompletion,
+}) => {
   // set new task hook
   const [newTaskLabel, setNewTaskLabel] = useState('');
   // input handler
@@ -23,15 +27,8 @@ export const ListScreen: React.FC<Props> = ({ tasks, setTasks }) => {
   // handling the checked box of each task
   // define a function that returns a function that checks the id of the task handled vs the task iterated
   const handleCompleteChange =
-    (handledTask: Task) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      setTasks((tasks) =>
-        tasks.map((task) => {
-          if (task.id === handledTask.id) {
-            return { ...task, isComplete: e.target.checked };
-          }
-          return task;
-        })
-      );
+    (task: Task) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      updateTaskCompletion(task.id, e.target.checked);
     };
 
   // function to clear all completed tasks
