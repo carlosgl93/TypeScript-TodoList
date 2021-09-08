@@ -1,3 +1,5 @@
+import { shuffle } from 'lodash';
+import { nanoid } from 'nanoid';
 import { useState } from 'react';
 import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
 import './helpers';
@@ -6,6 +8,13 @@ import { ListScreen } from './screens/ListScreen';
 import { Task } from './types';
 
 const App: React.FC = () => {
+  // tasks state
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  // focused task state
+  const [focusedTaskId, setFocusedTaskId] = useState<string | undefined>(
+    undefined
+  );
   // handling the checked box of each task
   // define a function that returns a function that checks the id of the task handled vs the task iterated
   const handleCompleteChange =
@@ -20,6 +29,15 @@ const App: React.FC = () => {
       );
     };
 
+  const addTask = (task: Pick<Task, 'label'>) => {
+    const id = nanoid();
+    setTasks((tasks) => [
+      ...tasks,
+      { id: nanoid(), label: task.label, isComplete: false },
+    ]);
+    if (!focusedTaskId) setFocusedTaskId(id);
+  };
+
   const updateTaskCompletion = (taskId: string, isComplete: boolean) => {
     setTasks((tasks) =>
       tasks.map((task) => {
@@ -31,9 +49,20 @@ const App: React.FC = () => {
     );
   };
 
-  // tasks container
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const tasksApi = { tasks, setTasks, updateTaskCompletion };
+  const shuffleFocusedTask = () => {
+    setFocusedTaskId(shuffle(tasks.filter((task) => !task.isComplete))[0]?.id);
+  };
+
+  const focusedTask = () => tasks.find((task) => task.id === focusedTaskId);
+
+  const tasksApi = {
+    addTask,
+    tasks,
+    setTasks,
+    updateTaskCompletion,
+    focusedTask,
+    shuffleFocusedTask,
+  };
   return (
     <BrowserRouter>
       <nav>

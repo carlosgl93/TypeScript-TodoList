@@ -5,6 +5,7 @@ import { Task, TasksProps } from '../types';
 type Props = TasksProps & {};
 
 export const ListScreen: React.FC<Props> = ({
+  addTask,
   tasks,
   setTasks,
   updateTaskCompletion,
@@ -17,10 +18,7 @@ export const ListScreen: React.FC<Props> = ({
   // on key press down actions
   const handleNewTaskKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && newTaskLabel !== '') {
-      setTasks((task) => [
-        ...tasks,
-        { id: nanoid(), label: newTaskLabel, isComplete: false },
-      ]);
+      addTask({ label: newTaskLabel });
       setNewTaskLabel('');
     }
   };
