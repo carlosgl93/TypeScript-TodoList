@@ -53,7 +53,7 @@ const App: React.FC = () => {
     setFocusedTaskId(shuffle(tasks.filter((task) => !task.isComplete))[0]?.id);
   };
 
-  const focusedTask = () => tasks.find((task) => task.id === focusedTaskId);
+  const focusedTask = tasks.find((task) => task.id === focusedTaskId);
 
   const tasksApi = {
     addTask,
