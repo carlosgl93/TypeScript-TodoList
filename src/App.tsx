@@ -33,7 +33,7 @@ const App: React.FC = () => {
     const id = nanoid();
     setTasks((tasks) => [
       ...tasks,
-      { id: nanoid(), label: task.label, isComplete: false },
+      { id, label: task.label, isComplete: false },
     ]);
     if (!focusedTaskId) setFocusedTaskId(id);
   };
@@ -53,7 +53,7 @@ const App: React.FC = () => {
     setFocusedTaskId(shuffle(tasks.filter((task) => !task.isComplete))[0]?.id);
   };
 
-  const focusedTask = () => tasks.find((task) => task.id === focusedTaskId);
+  const focusedTask = tasks.find((task) => task.id === focusedTaskId);
 
   const tasksApi = {
     addTask,
