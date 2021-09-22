@@ -33,7 +33,7 @@ const App: React.FC = () => {
     const id = nanoid();
     setTasks((tasks) => [
       ...tasks,
-      { id: nanoid(), label: task.label, isComplete: false },
+      { id, label: task.label, isComplete: false },
     ]);
     if (!focusedTaskId) setFocusedTaskId(id);
   };
